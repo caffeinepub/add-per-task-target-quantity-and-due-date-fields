@@ -1,0 +1,49 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-the-frontend-actor-initialization-to-always-call-initializeaccesscontrolwithsecret-using-the-url-parameter-caffeineadmintoken-when-present-even-for-anonymous-not-logged-in-sessions-so-admin-token-sessions-can-save-notes-without-internet-identity-login",
+      "featureTitle": "Update the frontend actor initialization to always call _initializeAccessControlWithSecret using the URL parameter caffeineAdminToken (when present), even for anonymous (not logged-in) sessions, so admin-token sessions can save notes without Internet Identity login.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useAdminTokenInitialization.ts"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-clear-frontend-guard-for-non-admin-anonymous-users-prevent-creating-saving-notes-until-the-user-logs-in-with-internet-identity-and-show-an-english-error-toast-explaining-that-login-is-required-instead-of-failing-after-calling-the-backend",
+      "featureTitle": "Add a clear frontend guard for non-admin, anonymous users: prevent creating/saving notes until the user logs in with Internet Identity, and show an English error/toast explaining that login is required (instead of failing after calling the backend).",
+      "files": [
+        "frontend/src/components/Header.tsx",
+        "frontend/src/components/LoginButton.tsx",
+        "frontend/src/components/NoteEditor.tsx",
+        "frontend/src/pages/NotesPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "authorization@4.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

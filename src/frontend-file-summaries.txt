@@ -1,0 +1,15 @@
+{
+  "frontend/src/App.tsx": "Main application component that wraps the app with ThemeProvider and QueryClientProvider, initializes admin token for anonymous sessions, and renders NotesPage with toast notifications.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including fetching, creating, updating, deleting notes with progress, category, target, and dueDate fields, toggling checklist items, and proper cache invalidation.",
+  "frontend/src/pages/NotesPage.tsx": "Main page component that manages view state between notes list and editor, with guards to block note creation for non-authenticated users without admin tokens.",
+  "frontend/src/components/Header.tsx": "Application header with branding, logo, login button, and theme toggle for light/dark mode switching.",
+  "frontend/src/components/Footer.tsx": "Simple footer component with copyright notice and caffeine.ai attribution link.",
+  "frontend/src/components/NotesList.tsx": "Grid display of all notes with preview cards showing colored badges for progress and category, target/quantity and due date information with overdue highlighting, delete functionality, and loading states.",
+  "frontend/src/components/NoteEditor.tsx": "Main editor component with save guards that block non-authenticated users without admin tokens from saving notes, showing English login-required messages.",
+  "frontend/src/components/EditorToolbar.tsx": "Toolbar with formatting buttons for adding different block types (heading, bullet, checklist) and image upload functionality.",
+  "frontend/src/components/EditorContent.tsx": "Renders editable blocks with different types (text, heading, bullet, checklist, image) with formatting controls and delete buttons.",
+  "frontend/src/index.css": "Global styles with OKLCH color system featuring purple/indigo primary colors and amber accents for both light and dark modes.",
+  "frontend/src/hooks/useAdminTokenInitialization.ts": "Hook that initializes access control with caffeineAdminToken for anonymous sessions, enabling admin-token sessions to perform privileged operations without Internet Identity login.",
+  "frontend/src/components/LoginButton.tsx": "Login/Logout button component using Internet Identity with loading states and proper query cache clearing on logout.",
+  "frontend/src/hooks/useActor.ts": "Handles backend actor initialization with Internet Identity or anonymous sessions, delegating admin token initialization for anonymous actors to useAdminTokenInitialization hook."
+}

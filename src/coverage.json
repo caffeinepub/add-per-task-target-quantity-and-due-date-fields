@@ -1,0 +1,69 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-06T04:08:50.067Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 3,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-6",
+        "summary": "Fix backend authorization so that callers recognized as admins can perform note operations (create/update/delete/view/list, checklist toggle, add image, and filters) even if they do not have the #user permission, to prevent \"Unauthorized: Only users can create notes\" when using a valid admin token.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Update the frontend actor initialization to always call _initializeAccessControlWithSecret using the URL parameter caffeineAdminToken (when present), even for anonymous (not logged-in) sessions, so admin-token sessions can save notes without Internet Identity login.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/hooks/useAdminTokenInitialization.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/hooks/useAdminTokenInitialization.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Add a clear frontend guard for non-admin, anonymous users: prevent creating/saving notes until the user logs in with Internet Identity, and show an English error/toast explaining that login is required (instead of failing after calling the backend).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/LoginButton.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/NotesPage.tsx",
+          "frontend/src/components/NoteEditor.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/LoginButton.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/pages/NotesPage.tsx",
+          "frontend/src/components/NoteEditor.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/components/NoteEditor.tsx",
+    "frontend/src/hooks/useAdminTokenInitialization.ts",
+    "frontend/src/pages/NotesPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

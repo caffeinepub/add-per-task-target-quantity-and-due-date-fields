@@ -1,0 +1,57 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Enable admin-token note saving in anonymous sessions and add anonymous non-admin save guard",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "summary": "Initialize access control with caffeineAdminToken even for anonymous sessions so admin-token sessions can save notes without Internet Identity login.",
+      "acceptanceCriteria": [
+        "If the URL contains #caffeineAdminToken=..., the frontend initializes access control with that secret regardless of whether Internet Identity identity is present.",
+        "In an admin-token session, pressing Save in the note editor successfully creates a new note and it appears in the notes list after returning (no Unauthorized toast)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAdminTokenInitialization.ts",
+          "operation": "create",
+          "description": "Create a hook that reads caffeineAdminToken via getSecretParameter and, when an actor is available (including anonymous), calls actor._initializeAccessControlWithSecret(token). Ensure it runs once per actor instance (idempotent via ref) and invalidates/refetches note queries after initialization completes."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the new useAdminTokenInitialization hook into the root app so it runs on startup and whenever the actor instance changes, enabling admin-token initialization for anonymous sessions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Block create/save actions for non-admin anonymous users and show an English login-required message instead of failing after backend calls.",
+      "acceptanceCriteria": [
+        "When the user is not logged in and no caffeineAdminToken is provided, the Save action is blocked and an English message indicates that login is required to create/save notes.",
+        "When the user logs in successfully, Save works normally without requiring a page refresh."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginButton.tsx",
+          "operation": "create",
+          "description": "Add a Login/Logout button using the existing useInternetIdentity hook to allow Internet Identity login/logout from the UI; on logout, clear cached queries as appropriate for the app's existing patterns."
+        },
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "modify",
+          "description": "Render the new LoginButton in the header alongside the theme toggle to provide an obvious login path for users who are blocked from saving notes."
+        },
+        {
+          "path": "frontend/src/pages/NotesPage.tsx",
+          "operation": "modify",
+          "description": "Add a guard to the 'Buat Catatan Baru' action: if the user is anonymous and no caffeineAdminToken is present (via getSecretParameter), block entering create mode and show an English toast explaining that login is required to create notes."
+        },
+        {
+          "path": "frontend/src/components/NoteEditor.tsx",
+          "operation": "modify",
+          "description": "Add a guard at the start of handleSave: if the user is anonymous and no caffeineAdminToken is present, prevent calling create/update mutations and show an English toast explaining that Internet Identity login is required to save notes. Ensure this logic reacts to login state changes without requiring a refresh."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Task/progress tracking app with categories; add per-task target/quantity and a due date/deadline while preserving existing 'kemartin' content unchanged.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Deployment error occurred during redeploy/publish attempt (\"Ada yang tidak beres dengan deployment\").",
+    "Users report they cannot save \"catatan ide\" (idea notes); save action fails/does not persist."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-update-the-frontend-note-create-edit-flow-to-allow-users-to-set-a-per-note-target-quantity-and-due-date-deadline-and-persist-those-values-via-the-updated-backend-apis",
+      "title": "Update the frontend note create/edit flow to allow users to set a per-note target/quantity and due date/deadline, and persist those values via the updated backend APIs.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-target-quantity-and-due-date-deadline-on-the-notes-list-cards-so-users-can-see-them-at-a-glance",
+      "title": "Display the target/quantity and due date/deadline on the notes list cards so users can see them at a glance.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-react-query-hooks-and-typescript-types-usage-to-match-the-backend-api-changes-for-the-new-fields",
+      "title": "Update React Query hooks and TypeScript types usage to match the backend API changes for the new fields.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-frontend-actor-initialization-to-always-call-initializeaccesscontrolwithsecret-using-the-url-parameter-caffeineadmintoken-when-present-even-for-anonymous-not-logged-in-sessions-so-admin-token-sessions-can-save-notes-without-internet-identity-login",
+      "title": "Update the frontend actor initialization to always call _initializeAccessControlWithSecret using the URL parameter caffeineAdminToken (when present), even for anonymous (not logged-in) sessions, so admin-token sessions can save notes without Internet Identity login.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-clear-frontend-guard-for-non-admin-anonymous-users-prevent-creating-saving-notes-until-the-user-logs-in-with-internet-identity-and-show-an-english-error-toast-explaining-that-login-is-required-instead-of-failing-after-calling-the-backend",
+      "title": "Add a clear frontend guard for non-admin, anonymous users: prevent creating/saving notes until the user logs in with Internet Identity, and show an English error/toast explaining that login is required (instead of failing after calling the backend).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Add per-task target or quantity (jumlah pengerjaan) field",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Add per-task due date/deadline (batas waktu pengerjaan)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Preserve existing 'kemartin' content/code unchanged during rebuild/update",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Extend the backend Note model to store an optional target/quantity and an optional due date/deadline, without changing existing note titles/content (including any existing note named \"kemartin\").",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add a conditional Motoko state migration that preserves all existing note data and initializes the new fields to empty/default values for all existing notes (including any note titled \"kemartin\").",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Fix backend authorization so that callers recognized as admins can perform note operations (create/update/delete/view/list, checklist toggle, add image, and filters) even if they do not have the #user permission, to prevent \"Unauthorized: Only users can create notes\" when using a valid admin token.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Add per-task target/quantity and due date fields",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,83 @@
+{
+  "kind": "build_request",
+  "title": "Fix inability to save idea notes due to Unauthorized access control",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-6",
+      "text": "Fix backend authorization so that callers recognized as admins can perform note operations (create/update/delete/view/list, checklist toggle, add image, and filters) even if they do not have the #user permission, to prevent \"Unauthorized: Only users can create notes\" when using a valid admin token.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "kenapa tidak bisa menyimpan catatan ide ?",
+          "seperti itu, tolong segera perbaiki"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When the caller is an admin, backend methods createNote, updateNote, deleteNote, getNote, getAllNotes, checklistToggle, addImageToNote, filterNotesByCategory, and filterNotesByProgress do not trap with \"Unauthorized: Only users can ...\" solely due to lacking #user permission.",
+        "When the caller is neither admin nor has #user permission, the methods still trap with the existing Unauthorized messages.",
+        "Non-admin authorization rules about only accessing/modifying one’s own notes remain enforced (admin remains allowed to access/modify others’ notes as currently intended)."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Update the frontend actor initialization to always call _initializeAccessControlWithSecret using the URL parameter caffeineAdminToken (when present), even for anonymous (not logged-in) sessions, so admin-token sessions can save notes without Internet Identity login.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "kenapa tidak bisa menyimpan catatan ide ?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "If the URL contains #caffeineAdminToken=..., the frontend initializes access control with that secret regardless of whether Internet Identity identity is present.",
+        "In an admin-token session, pressing Save in the note editor successfully creates a new note and it appears in the notes list after returning (no Unauthorized toast)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add a clear frontend guard for non-admin, anonymous users: prevent creating/saving notes until the user logs in with Internet Identity, and show an English error/toast explaining that login is required (instead of failing after calling the backend).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "kenapa tidak bisa menyimpan catatan ide ?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When the user is not logged in and no caffeineAdminToken is provided, the Save action is blocked and an English message indicates that login is required to create/save notes.",
+        "When the user logs in successfully, Save works normally without requiring a page refresh."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain single-actor in backend/main.mo; only use backend/migration.mo if state migration is required.",
+    "Do not edit files in frontend immutablePaths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui."
+  ],
+  "nonGoals": [
+    "Implementing third-party authentication other than Internet Identity.",
+    "Changing the existing target/quantity and due date features (already implemented).",
+    "Addressing deployment/publishing pipeline errors outside of application code changes."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}
